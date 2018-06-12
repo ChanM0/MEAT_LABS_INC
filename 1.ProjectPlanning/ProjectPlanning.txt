@@ -1,0 +1,58 @@
+List of Web Pages
+	1.	Welcome to MEAT LABS Inc 
+	2.	Login 
+			- Upon user login, a user lands on the main forum page and sees ALL the posts.
+	3. 	Register
+			- email will get sent out to the user thanking them for registering.
+			- Will automatically login into profile after registering
+	4.	Profile Page 
+			- Must show all this.User Posts
+			- Biography 
+	5. 	Feed Page
+			- Must show ALL USERS posts
+			- can comment on any post
+
+List of Tables 
+create users table
+
+create users_biography table
+
+create password resets table
+
+create roles table
+
+create user roles table
+
+create posts table
+
+create comments table 
+
+ROLES
+		- CRUD Posts
+		- Create posts
+			- User Only
+		- Read 	 posts 
+			- Every User 
+		- Update posts
+			- User Only
+		- Delete posts
+			- User Only
+				- Also delete comments associated with the posts
+	- CRUD Comments
+		- Create comments
+			- User Only
+				- On any post
+		- Read 	 comments 
+			- Every User
+		- Update comments
+			- User Only
+		- Delete comments
+			- User Only
+
+	Admin table //user role table??
+
+	Admin powers 
+		- Admins can assign user roles as remove them 
+			- note admins CAN NOT remove their admin role.
+		- Admins can delete any user account 
+			- doing so should inform the user via email that their account has been marked for deletion.

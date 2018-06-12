@@ -1,0 +1,32 @@
+create users table
+	auto Increment id | First Name | Last Name | Email | Password | Username 
+
+create users_biography table
+	auto Increment id | user_id | biography
+					  | integer	|   text
+
+create password resets table
+
+create roles table
+	auto Increment id | role | 
+		make role boolean
+			ask for standard practice
+				
+				ADMIN 
+				USER
+
+
+create user roles table
+	auto Increment id | user_id | role_id
+
+create posts table
+	auto Increment id | user_id | post
+					  |	author 	| text
+					  |	of 	    |
+					  |	post 	|
+
+create comments table 
+	auto Increment id | post_id | comment
+					  |	 	 	| text
+					  |	  	    |
+					  |		 	|
