@@ -1,3 +1,6 @@
+//use email since its unique
+// or make username unique
+
 create users table
 	auto Increment id | First Name | Last Name | Email | Password | Username 
 

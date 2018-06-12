@@ -1,0 +1,53 @@
+List of Web Pages
+
+	1.	Welcome to MEAT LABS Inc 
+			- Nav bar 1:
+				- Must have:
+					- Login and Register 	
+	
+	2.	Login 
+			- Upon user login, a user lands on the main forum page and sees ALL the posts.
+	
+	3. 	Register
+			- email will get sent out to the user thanking them for registering.
+			- Will automatically login into profile after registering
+	
+	4.	Main Forum Page
+			- Nav Bar 2:
+				- Must Have: 
+					- Log Out BTN
+						- Pop up ?
+					- User Page BTN
+						- Takes user to USER page,
+							- refreshes 
+					- Main Forum Page BTN
+						- Takes user to Forum Page.
+							- refreshes page
+					- Settings
+						- Settings page?
+					- Admin Mode Only shown for Admin  BTN
+						- Allows admin tools visable?
+						- how about admin options visable 
+						
+			- Must show ALL USERS posts
+			- can comment on any post
+	
+	5. 	Profile Page 
+			- Nav Bar 2:
+				- Must Have: 
+					- Log Out BTN
+						- Pop up ?
+					- User Page BTN
+						- Takes user to USER page,
+							- refreshes 
+					- Main Forum Page BTN
+						- Takes user to Forum Page.
+							- refreshes page
+					- Settings
+						- Settings page?
+					- Admin Mode Only shown for Admin  BTN
+						- Allows admin tools visable?
+						- how about admin options visable 
+
+			- Must show all this.User Posts
+			- Biography 
