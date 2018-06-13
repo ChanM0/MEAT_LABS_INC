@@ -1,0 +1,18 @@
+makes a model migration and a controller
+
+	php artisan make:model UserBiography -m -c
+
+	php artisan make:model UserRole -m -c
+
+	php artisan make:model Post -m -c
+
+makes a model migration and a controller, pivot model
+	php artisan make:model Comment -m -c -p
+
+
+Creates seeders
+	php artisan make:seed UsersTableSeeder
+	php artisan make:seed UsersBiographiesTableSeeder
+	php artisan make:seed UserRoleSeeder
+	php artisan make:seed PostSeeder
+	php artisan make:seed CommentSeeder
