@@ -61,22 +61,20 @@
                                                             </li>
                                                             <li>Author By:
                                                                 {{  $comment->author['username']  }}
-                                                                {{-- {{ $post->user['username'] }} --}}
-                                                            </li>
-                                                            <li>
-                                                                <form method="POST" action="#">
-                                                                    <div class="form-group">
-                                                                        <label for="comment">{{ __('Comment') }}</label>
-                                                                        <input type="input" class="col-md-4 form-control" id="comment" placeholder="Enter comment" name="comment" autofocus>
-                                                                      </div>
-                                                                      <input type="submit" value="Comment">
-                                                                </form>
                                                             </li>
                                                         </ul>
                                                     </li>
                                                 @endforeach
-
                                             </ol>
+                                        </li>
+                                        <li>
+                                            <form method="POST" action="#">
+                                                <div class="form-group">
+                                                    <label for="comment">{{ __('Comment') }}</label>
+                                                    <input type="input" class="col-md-4 form-control" id="comment" placeholder="Enter comment" name="comment" autofocus>
+                                                </div>
+                                                <input type="submit" value="Comment">
+                                            </form>
                                         </li>
 
                                        {{-- {{ $comments }} --}}
