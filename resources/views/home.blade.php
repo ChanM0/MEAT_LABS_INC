@@ -23,10 +23,11 @@
                         </li>
                         <li>
                             <p hidden>
-                                {{$email = Auth::user()->email}}
+                                {{-- {{$email = Auth::user()->email}} --}}
                             </p>
                             {{-- <a href="{{route('profile')}}">Profile</a> --}}
-                            <a href="{{ route( 'profile', [$email] ) }}">{{Auth::user()->First_Name}}  {{Auth::user()->Last_Name}} Profile</a>
+                            {{-- <a href="{{ route( 'profile', [$email] ) }}">{{Auth::user()->First_Name}}  {{Auth::user()->Last_Name}} Profile</a> --}}
+                            <a href="{{ route( 'profile', [Auth::user()->email] ) }}">{{Auth::user()->First_Name}}  {{Auth::user()->Last_Name}} Profile</a>
                         </li> 
                     </ol>                    
                     

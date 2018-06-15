@@ -17,6 +17,16 @@
                     @endif
                     {{Auth::user()->First_Name}}
                     {{Auth::user()->Last_Name}} 
+                    @if (Auth::user()->admin === 0)
+                        <h1>NOT Admin</h1>
+                    @endif
+                    <form method="POST" action="#">
+                        <div class="form-group">
+                            <label for="post">{{ __('Create Post') }}</label>
+                            <input type="input" class="col-md-4 form-control" id="post" placeholder="Enter post" name="post" autofocus>
+                        </div>
+                        <input type="submit" value="Post">
+                    </form>
                     <ol>
                         <li>
                             User Name: {{  $user->username  }}
@@ -76,10 +86,8 @@
                                                 <input type="submit" value="Comment">
                                             </form>
                                         </li>
-
-                                       {{-- {{ $comments }} --}}
-                                    </ul>     
                                 @endforeach
+                                    </ul>     
                         </li>   
                     </ol>                    
                     
