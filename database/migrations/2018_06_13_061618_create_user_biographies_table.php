@@ -14,12 +14,12 @@ class CreateUserBiographiesTable extends Migration
     public function up()
     {
         Schema::create('user_biographies', function (Blueprint $table) {
-             $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->text('biography');
-            $table->timestamps();
-        });
+           $table->increments('id');
+           $table->unsignedInteger('user_id');
+           $table->foreign('user_id')->references('id')->on('users');
+           $table->text('biography');
+           $table->timestamps();
+       });
     }
 
     /**

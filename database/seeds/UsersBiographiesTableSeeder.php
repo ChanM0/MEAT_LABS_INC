@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\UserBiography;
 class UsersBiographiesTableSeeder extends Seeder
 {
     /**
@@ -12,5 +12,12 @@ class UsersBiographiesTableSeeder extends Seeder
     public function run()
     {
         //
+    	for ($i=1; $i < 25; $i++) { 
+        	# code...
+    		UserBiography::create([
+    			'user_id' => $i,
+    			'biography' => 'Bio Example #'.$i
+    		]);
+    	}
     }
 }
