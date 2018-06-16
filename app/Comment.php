@@ -11,5 +11,7 @@ class Comment extends Pivot
     	//relate to user
     	return $this->hasOne('App\User','id','user_id');
     }
+
+    
 }
 

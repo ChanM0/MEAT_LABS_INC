@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserBiography extends Model
 {
     //
+    // protected 
 	protected $hidden = [
 		'id', 'user_id','created_at','updated_at',
 	];
