@@ -44,9 +44,8 @@ class CommentController extends Controller
             'post_id' => $request->post_id,
             'comment' => $request->comment 
         ]);
-        
-        // return redirect()->route( 'profile', [$request->email] );
-        return redirect()->url( $request->url );
+         
+        return back()->withInput();
         
         echo "Connection works store";
     }

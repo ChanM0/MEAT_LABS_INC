@@ -29,6 +29,9 @@
                             {{-- <a href="{{ route( 'profile', [$email] ) }}">{{Auth::user()->First_Name}}  {{Auth::user()->Last_Name}} Profile</a> --}}
                             <a href="{{ route( 'profile', [Auth::user()->email] ) }}">{{Auth::user()->First_Name}}  {{Auth::user()->Last_Name}} Profile</a>
                         </li> 
+                        <li>
+                            <a href="{{ route( 'forum' ) }}">Main Forum</a>
+                        </li>
                     </ol>                    
                     
                 </div>

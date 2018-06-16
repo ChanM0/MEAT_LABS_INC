@@ -43,7 +43,8 @@ public function index()
             'post' => $request->post
         ]);
         // return $post;
-        return redirect()->route( 'profile', [$request->email] );
+        return back()->withInput();
+        // return redirect()->route( 'profile', [$request->email] );
         echo "Connection works store";
     }
 
@@ -55,7 +56,6 @@ public function index()
      */
     public function show($id)
     {
-        //
         echo "Connection works show";
     }
 
@@ -94,5 +94,12 @@ public function index()
     {
         //
         echo "Connection works destroy";
+    }
+
+    public function mainForum(){
+        $posts = Post::with('comments.author')
+            ->orderBy('created_at', 'desc')->get();
+        // return $posts;
+        return view('user.mainForum',compact('posts'));
     }
 }
