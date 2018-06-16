@@ -16,7 +16,10 @@ class CreateUserBiographiesTable extends Migration
         Schema::create('user_biographies', function (Blueprint $table) {
            $table->increments('id');
            $table->unsignedInteger('user_id');
-           $table->foreign('user_id')->references('id')->on('users');
+           $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
            $table->text('biography');
            $table->timestamps();
        });

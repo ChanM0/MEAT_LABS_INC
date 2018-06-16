@@ -7,26 +7,15 @@ use App\Post;
 
 class PostController extends Controller
 {
-/**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-public function index()
-{
-        //
-    echo "Connection works Index";
-}
 
     /**
-     * Show the form for creating a new resource.
+     * Create a new controller instance.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function create()
+    public function __construct()
     {
-        //
-        echo "Connection works Create";
+        $this->middleware('auth');
     }
 
     /**
@@ -48,15 +37,11 @@ public function index()
         echo "Connection works store";
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        echo "Connection works show";
+    public function mainForum(){
+        $posts = Post::with('comments.author')
+        ->orderBy('created_at', 'desc')->get();
+        // return $posts;
+        return view('user.mainForum',compact('posts'));
     }
 
     /**
@@ -67,7 +52,6 @@ public function index()
      */
     public function edit($id)
     {
-        //
         echo "Connection works edit";
     }
 
@@ -84,6 +68,55 @@ public function index()
         echo "Connection works update";
     }
 
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function delete($id)
+     {
+        Post::where('id', $id)->delete();
+        return back()->withInput();
+        echo "Connection works delete";
+    }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function index()
+     {
+        //
+        echo "Connection works Index";
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+        echo "Connection works Create";
+    }
+
+    
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        echo "Connection works show";
+    }
+
+
     /**
      * Remove the specified resource from storage.
      *
@@ -96,10 +129,5 @@ public function index()
         echo "Connection works destroy";
     }
 
-    public function mainForum(){
-        $posts = Post::with('comments.author')
-            ->orderBy('created_at', 'desc')->get();
-        // return $posts;
-        return view('user.mainForum',compact('posts'));
-    }
+
 }

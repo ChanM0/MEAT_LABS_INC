@@ -29,6 +29,7 @@
                         <li>
                             {{-- prints posts --}}
                             Posts:
+                            {{-- {{ $user->id }} --}}
                             @include('layouts.postComment')           
                         </li>   
                     </ol>                    

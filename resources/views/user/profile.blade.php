@@ -45,8 +45,18 @@
                                 <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Delete/Edit
                                 </button>
-                                @include('forms.deleteEditForm')
-                            </div>  
+                                <div class="dropdown-menu">
+                                    <form method="POST" action="{{ route( 'bio.delete', [Auth::user()->id] ) }}">
+                                        @csrf
+                                        <input class="dropdown-item" type="submit" value="Delete">
+                                    </form>
+                                    <div class="dropdown-divider"></div>
+                                    <form method="GET" action="{{ route( 'biography.edit', [Auth::user()->id] ) }}">
+                                        @csrf
+                                        <input class="dropdown-item" type="submit" value="Edit">
+                                    </form>
+                                </div>
+                            </div>
                             @endif 
                         </li>
                         <li>

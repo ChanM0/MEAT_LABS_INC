@@ -8,7 +8,7 @@
                 <div class="card-header">User Biography</div>
 
                 <div class="card-body">
-                    <form method="get" action="{{ route('update') }}">
+                    <form method="get" action="{{ route('bio.update') }}">
                         @csrf
                         <div class="form-group">
 						    <label for="biography" class="col-md-4 col-form-label">User Biography</label>
