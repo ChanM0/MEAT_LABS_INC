@@ -2,7 +2,7 @@
 
  <ul>
 
-    @if (Auth::user()->id === $post->user_id)
+    @if (Auth::user()->id === $post->user_id || $post->user['admin'] === 1 )
 
     <li>
 
@@ -74,7 +74,7 @@
 
                 <ul>
 
-                    @if (Auth::user()->id === $comment->user_id)
+                    @if (Auth::user()->id === $comment->user_id || $comment->author['email'] === 1)
 
                     <li>
 

@@ -58,11 +58,19 @@
 
                             <div class="btn-group">
 
+                                {{-- 
+                                if the login user isnt the current profile page user 
+                                then show 
+                                Delete 
+                                make Admin 
+                                remove as Admin
+                                --}}
+
                                 @if (Auth::user()->id !== $user->id)
 
                                 <button autofocus type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                    Delete/Make Admin
+                                    Delete/Change Admin Status
 
                                 </button>
 
@@ -86,16 +94,37 @@
 
                                     </form>
 
+                                    {{-- 
+                                    if the login user isnt the current profile page user 
+                                    then show 
+                                    make Admin 
+                                    remove as Admin
+                                    --}}
+
                                     @if (Auth::user()->id !== $user->id)
-
-                                    <form method="Post" action="{{ route( 'user.admin', [$user->id] ) }}">
-
-                                        @csrf
-
-                                        <input class="dropdown-item" type="submit" value="Make Admin">
-
-                                    </form>
                                     
+                                        @if ($user->admin === 0)
+
+                                        <form method="Post" action="{{ route( 'user.makeAdmin', [$user->id] ) }}">
+
+                                            @csrf
+
+                                            <input class="dropdown-item" type="submit" value="Make Admin">
+
+                                        </form>
+
+                                        @else
+
+                                        <form method="Post" action="{{ route( 'user.removeAdmin', [$user->id] ) }}">
+
+                                            @csrf
+
+                                            <input class="dropdown-item" type="submit" value="Remove Admin">
+
+                                        </form>
+
+                                        @endif
+
                                     @endif
 
                                 </div>
@@ -134,7 +163,7 @@
 
                     <ol>
 
-                        <li class="liMargin">
+                        <li>
 
                             User Name: 
 
@@ -168,7 +197,7 @@
 
                         </li>
 
-                        <li class="liMargin"> Biography:
+                        <li> Biography:
 
                             @if (!is_null($bio))
 
@@ -225,7 +254,7 @@
                         </li>
                         @endif
 
-                        <li class="liMargin">
+                        <li>
                             {{-- prints posts --}}
                             Posts:
 

@@ -90,13 +90,22 @@ class UserController extends Controller
 
     }
 
-    public function admin($id)
+    public function makeAdmin($id)
     {
-        
+
         $user = User::where('id',$id)->first();
         $userAfter = User::where('id',$id)->update(['admin'=>1]);
         // return $userAfter;
-        return redirect()->route('home');
+        return back()->withInput();
+    }
+
+    public function removeAdmin($id)
+    {
+
+        $user = User::where('id',$id)->first();
+        $userAfter = User::where('id',$id)->update(['admin'=>0]);
+        // return $userAfter;
+        return back()->withInput();
     }
 
 

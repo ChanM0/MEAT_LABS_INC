@@ -28,9 +28,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('comments.author')->with('user')
-        ->orderBy('created_at', 'desc')->get();
+        try{
+            $posts = Post::with('comments.author')->with('user')
+            ->orderBy('created_at', 'desc')->get();
         // return $posts;
-        return view('home',compact('posts'));
+            return view('home',compact('posts'));
+        }
+         catch (Exception $e) {
+            return view('auth.login');
+         }
+        
     }
 }
