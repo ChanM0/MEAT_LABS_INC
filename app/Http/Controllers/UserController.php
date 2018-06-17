@@ -46,7 +46,9 @@ class UserController extends Controller
     {
         // return $id;
         $user = User::where('id', $id)->first();
-        // return $user;
+        if(is_null( $user ) ){
+            return redirect()->route('home');
+        }
 
         //checks if the Authenticated user is able to see the edit comment
         if( Auth::user()->id === $user->id ){
@@ -54,7 +56,7 @@ class UserController extends Controller
             return view('forms.usernameEditForm',compact('user', 'id' ));
         }
         else{
-            return ['status'=>'false'];
+            // return ['status'=>'false'];
             return redirect()->route('home');
         }
 

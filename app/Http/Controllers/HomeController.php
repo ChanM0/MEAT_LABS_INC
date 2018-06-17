@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\User;
 use App\UserBiography;
 
+use App\Post;
+
+
 class HomeController extends Controller
 {
     /**
@@ -25,14 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-      //  return $user;
-        // $bio = UserBiography::find($user->biography);
-
-        // return $bio;
-         // if(is_null( $bio = UserBiography::find($user->biography)){
-         //    return ['status'=>'true'];
-           
-         // }
-        return view('home');
+        $posts = Post::with('comments.author')->with('user')
+        ->orderBy('created_at', 'desc')->get();
+        return view('home',compact('posts'));
     }
 }
