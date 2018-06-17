@@ -101,8 +101,6 @@
                                     
                                     @endif
 
-                                    
-
                                 </div>
 
                             </div>
@@ -163,9 +161,13 @@
 
                         </li>
 
-                        <li class="liMargin"> Biography:  
+                        <li class="liMargin"> Biography:
+
+                            @if (!is_null($bio))
 
                             {{ $bio->biography }}
+
+                            @endif
 
                             {{-- Bio Edit --}}
 
@@ -181,7 +183,7 @@
 
                                 <div class="dropdown-menu">
 
-                                    <form method="POST" action="{{ route( 'biography.delete', [Auth::user()->id] ) }}">
+                                    <form method="POST" action="{{ route( 'bio.delete', [Auth::user()->id] ) }}">
 
                                         @csrf
 
@@ -208,34 +210,31 @@
                         </li>
 
                         @if (Auth::user()->id === $user->id)
-
                         <li>
 
-                         {{-- prints posts form--}}
-                         @include('forms.postForm')
+                            {{-- prints posts form--}}
+                            @include('forms.postForm')
 
-                     </li>
+                        </li>
+                        @endif
 
-                     @endif
+                        <li class="liMargin">
+                            {{-- prints posts --}}
+                            Posts:
 
-                     <li class="liMargin">
+                            @include('layouts.postComment')           
 
-                        {{-- prints posts --}}
-                        Posts:
+                        </li>   
 
-                        @include('layouts.postComment')           
+                    </ol>                    
 
-                    </li>   
-
-                </ol>                    
+                </div>
 
             </div>
 
         </div>
 
     </div>
-
-</div>
 
 </div>
 
