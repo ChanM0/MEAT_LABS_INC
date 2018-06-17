@@ -36,7 +36,7 @@
 
                             </textarea>
 
-                            <input type="hidden"  name="user_id" value="{{ $id }}">
+                            <input type="hidden"  name="user_id" value="{{ $user_id }}">
 
                         </div>
 

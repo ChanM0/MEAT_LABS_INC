@@ -22,7 +22,7 @@ class UserBiographyController extends Controller
     public function delete($id)
     {
         $bioUpdate = UserBiography::where('user_id', $id)
-                    ->update(['biography' => '']);
+        ->update(['biography' => '']);
         $user = User::where('id',$id)->first();
         return redirect()->route( 'profile', [$user->email] );
         echo "Connection works delete";
@@ -33,14 +33,24 @@ class UserBiographyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function edit($id)
+     public function edit($user_id)
      {
-        $userBio = UserBiography::where('user_id', $id)->first();
-        
+        $user = User::where('id',$user_id)->first();
+
+        if(!is_null($user)){
+            UserBiography::create([
+                'user_id' => $user_id,
+                'biography' => ''
+            ]);
+        }
+        else{
+            return redirect()->route('home');
+        }
+
+        $userBio = UserBiography::where('user_id', $user_id)->first();
         //checks if the Authenticated user is able to see the edit post
         if( Auth::user()->id === $userBio->user_id ){
-            
-            return view('forms.editBioForm',compact('userBio','id'));
+            return view('forms.editBioForm',compact('userBio','user_id'));
         }
         else{
             return redirect()->route('home');

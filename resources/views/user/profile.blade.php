@@ -91,7 +91,7 @@
 
                                     @if (Auth::user()->id !== $user->id)
 
-                                    <form method="Post" action="{{ route( 'user.admin', [Auth::user()->id] ) }}">
+                                    <form method="Post" action="{{ route( 'user.admin', [$user->id] ) }}">
 
                                         @csrf
 
@@ -183,7 +183,7 @@
 
                                 <div class="dropdown-menu">
 
-                                    <form method="POST" action="{{ route( 'bio.delete', [Auth::user()->id] ) }}">
+                                    <form method="POST" action="{{ route( 'biography.delete', [Auth::user()->id] ) }}">
 
                                         @csrf
 
