@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 use App\Http\Requests\UserFormRequest;
+use App\Mail\UserRegistrationEmail;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -66,12 +68,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-                'First_Name' => $data['firstName'],
-                'Last_Name' => $data['lastName'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-                'username' => $data['username']
-            ]);
+        $email = $data['email'];
+
+        $user = User::create([
+            'First_Name' => $data['firstName'],
+            'Last_Name' => $data['lastName'],
+            'email' => $email,
+            'password' => Hash::make($data['password']),
+            'username' => $data['username']
+        ]);
+
+        // auth()->login($user);
+        // 
+        Mail::to($user->email)->send(new UserRegistrationEmail($user));
+        return $user;
+
+    }
+
+    public function emailSearch($user)
+    {
+        echo $user->id;
+        
+
+        // return $user;
     }
 }

@@ -22,7 +22,9 @@ Create Controllers
 	php artisan make:controller PostController
 	php artisan make:controller UserBiographyController
 
-
+create mail
+	
+	php artisan make:mail UserCreated
 
 
 

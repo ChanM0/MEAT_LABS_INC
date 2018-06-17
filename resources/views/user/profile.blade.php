@@ -52,9 +52,9 @@
 
                         Profile:
 
-                        <li>
+                        @if (Auth::user()->admin === 1)
 
-                            @if (Auth::user()->admin === 1)
+                        <li>
 
                             <div class="btn-group">
 
@@ -78,7 +78,7 @@
 
                                 <div class="dropdown-menu">
 
-                                    <form method="post" action="{{ route( 'user.delete', [Auth::user()->id] ) }}">
+                                    <form method="post" action="{{ route( 'user.delete', [$user->id] ) }}">
 
                                         @csrf
 
@@ -102,9 +102,9 @@
 
                             </div>
 
-                            @endif 
-
                         </li>
+
+                        @endif                         
 
                         <li>User Id:
 
@@ -115,11 +115,10 @@
                         <li>User Status:
 
                             @if (  $user->admin === 1)
-                                Admin
+                            Admin
                             @else
-                                User
-                            @endif
-                           
+                            User
+                            @endif              
 
                         </li>
 

@@ -8,6 +8,9 @@ use App\UserBiography;
 use App\Post;
 use App\Comment;
 
+use App\Mail\UserDeletionEmail;
+use Illuminate\Support\Facades\Mail;
+
 // You may access the authenticated user via the Auth facade:
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,6 +81,10 @@ class UserController extends Controller
 
     public function delete($user_id)
     {
+        $user = User::where('id',$user_id)->first();
+        // return $user;
+        Mail::to($user->email)->send(new UserDeletionEmail($user));
+
         $user = User::where('id',$user_id)->delete();
         return redirect()->route('home');
 
