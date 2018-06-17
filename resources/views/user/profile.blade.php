@@ -58,9 +58,6 @@
 
                             <div class="btn-group">
 
-
-
-
                                 @if (Auth::user()->id !== $user->id)
 
                                 <button autofocus type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -112,6 +109,17 @@
                         <li>User Id:
 
                             {{ $user->id }}
+
+                        </li>
+
+                        <li>User Status:
+
+                            @if (  $user->admin === 1)
+                                Admin
+                            @else
+                                User
+                            @endif
+                           
 
                         </li>
 
