@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\UserBiography;
 use App\User;
 
+// You may access the authenticated user via the Auth facade:
+// use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class UserBiographyController extends Controller
 {
     //able to make sure only people edit there own bio
@@ -31,10 +35,16 @@ class UserBiographyController extends Controller
      */
      public function edit($id)
      {
-        // return $id;
         $userBio = UserBiography::where('user_id', $id)->first();
-        return view('forms.editBioForm',compact('userBio','id'));
-        // return redirect()->route( 'profile', [$request->email] ); 
+        
+        //checks if the Authenticated user is able to see the edit post
+        if( Auth::user()->id === $userBio->user_id ){
+            
+            return view('forms.editBioForm',compact('userBio','id'));
+        }
+        else{
+            return redirect()->route('home');
+        }
         echo "Connection works edit";
     }
 

@@ -1,6 +1,5 @@
  @foreach ($posts as $post)
  <ul>
-
     @if (Auth::user()->id === $post->user_id)
     <li>
         <div class="btn-group">
@@ -24,12 +23,16 @@
     <li>Post id:
         {{ $post->id }}
     </li>
+    <li>Author By:
+        {{ $post->user['username'] }}
+    </li>
     <li>Created at:
         {{ $post->created_at->toFormattedDateString() }}
     </li>
     <li>Post:
         {{ $post->post }}
         <ol>    
+            <h5>Comments</h5>
             @foreach ($post->comments as $comment)
             <li>
                 <ul>

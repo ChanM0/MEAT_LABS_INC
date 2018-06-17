@@ -47,6 +47,13 @@
             .py-4{
                 background-color: #f5f8fa;
             }
+            li{
+                margin:1%;
+            }
+
+            .btn{
+                padding: 10%;
+            }
 
         </style>
     </head>

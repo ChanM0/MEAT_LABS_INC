@@ -32,12 +32,25 @@
                     @endif
                     
                     <ol>
-                        <li>
+                        <li class="liMargin">
                             User Name: 
                             {{  $user->username  }}
+                            @if (Auth::user()->id === $user->id)
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Edit
+                                </button>
+                                <div class="dropdown-menu">
+                                    <form method="GET" action="{{ route( 'username.edit', [Auth::user()->id] ) }}">
+                                        @csrf
+                                        <input class="dropdown-item" type="submit" value="Edit">
+                                    </form>
+                                </div>
+                            </div>
+                            @endif 
                         </li>
                         
-                        <li> Biography:  
+                        <li class="liMargin"> Biography:  
                             {{ $bio->biography }}
                             {{-- Bio Edit --}}
                             @if (Auth::user()->id === $user->id)
@@ -59,15 +72,15 @@
                             </div>
                             @endif 
                         </li>
-                        <li>
+                        <li class="liMargin">
                             First Name:
                             {{ $user->First_Name }}
                         </li> 
-                        <li>
+                        <li class="liMargin">
                             Last Name:
                             {{ $user->Last_Name }}
                         </li> 
-                        <li>
+                        <li class="liMargin">
                             {{-- prints posts --}}
                             Posts:
                             @include('layouts.postComment')           

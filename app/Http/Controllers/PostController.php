@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Post;
+
+
+// You may access the authenticated user via the Auth facade:
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class PostController extends Controller
 {
@@ -38,7 +44,7 @@ class PostController extends Controller
     }
 
     public function mainForum(){
-        $posts = Post::with('comments.author')
+        $posts = Post::with('comments.author')->with('user')
         ->orderBy('created_at', 'desc')->get();
         // return $posts;
         return view('user.mainForum',compact('posts'));
@@ -52,7 +58,15 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        echo "Connection works edit";
+        $post = Post::where('id', $id)->first();
+        
+        //checks if the Authenticated user is able to see the edit post
+        if( Auth::user()->id === $post->user_id ){
+            return view('forms.postEditForm',compact('post'));
+        }
+        else{
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -62,9 +76,20 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        //checks if the Authenticated user is able to see the edit post
+        if( Auth::user()->id === intval($request->user_id) ){
+            $post = Post::where('id', $request->post_id)
+                     ->update(['post' => $request->post]);
+            // $user = User::where('id',$request->user_id)->first();
+            // return redirect()->route( 'profile', [$user->email] );
+            return redirect()->route( 'home' );
+        }
+        else{
+            // return ['status' => 'false'];
+            return redirect()->route('home');
+        }
         echo "Connection works update";
     }
 
