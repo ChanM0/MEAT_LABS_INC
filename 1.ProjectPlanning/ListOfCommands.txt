@@ -16,3 +16,13 @@ Creates seeders
 	php artisan make:seed UserRoleSeeder
 	php artisan make:seed PostSeeder
 	php artisan make:seed CommentSeeder
+
+Create Controllers
+	php artisan make:controller CommentController
+	php artisan make:controller PostController
+	php artisan make:controller UserBiographyController
+
+
+
+
+

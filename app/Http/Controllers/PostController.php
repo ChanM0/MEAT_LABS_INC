@@ -82,12 +82,9 @@ class PostController extends Controller
         if( Auth::user()->id === intval($request->user_id) ){
             $post = Post::where('id', $request->post_id)
                      ->update(['post' => $request->post]);
-            // $user = User::where('id',$request->user_id)->first();
-            // return redirect()->route( 'profile', [$user->email] );
             return redirect()->route( 'home' );
         }
         else{
-            // return ['status' => 'false'];
             return redirect()->route('home');
         }
         echo "Connection works update";
@@ -105,54 +102,5 @@ class PostController extends Controller
         return back()->withInput();
         echo "Connection works delete";
     }
-
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-     public function index()
-     {
-        //
-        echo "Connection works Index";
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        echo "Connection works Create";
-    }
-
-    
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        echo "Connection works show";
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-        echo "Connection works destroy";
-    }
-
 
 }

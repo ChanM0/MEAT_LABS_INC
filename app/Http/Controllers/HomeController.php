@@ -30,6 +30,7 @@ class HomeController extends Controller
     {
         $posts = Post::with('comments.author')->with('user')
         ->orderBy('created_at', 'desc')->get();
+        // return $posts;
         return view('home',compact('posts'));
     }
 }

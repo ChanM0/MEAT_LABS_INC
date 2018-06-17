@@ -31,10 +31,8 @@ class UserController extends Controller
     {
         $user = User::where('email',$email)->first();
         $bio = UserBiography::where('user_id', $user->id )->first();
-        //need to get users associated with this comment
-        // $posts = Post::with('comments.author')->with('user')->where('user_id', $user->id)->get();
         $posts = Post::with('comments.author')->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
-        // return $posts;
+
         if(!is_null($bio)){
             return view('user.profile',compact('bio','user','posts'));
 
@@ -69,7 +67,7 @@ class UserController extends Controller
         if( Auth::user()->id === intval($request->user_id) ){
             $user = User::where('id', $request->user_id)
             ->update(['username' => $request->username]);
-            return redirect()->route( 'home' );
+            return redirect()->route( 'profile', Auth::user()->email );
         }
         else{
             // return ['status' => 'false'];

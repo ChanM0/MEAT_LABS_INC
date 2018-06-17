@@ -14,19 +14,27 @@ Route::get('/username/{id}', 'UserController@usernameEdit')->name('username.edit
 Route::get('/username', 'UserController@usernameUpdate')->name('username.update');
 
 
+// Route::group(['prefix'=>'comment'],function () {
+Route::group(['prefix'=>'comment', 'middleware' => 'auth'],function () {
+	// Route::get('/','CommentController@all')->middleware('auth');
+	Route::post('/','CommentController@store')->name('comment.store');
+	Route::get('/{id}', 'CommentController@edit')->name('comment.edit');
+	Route::post('/{id}', 'CommentController@delete')->name('comment.delete');
+	Route::get('update/{id}', 'CommentController@update')->name('comment.update');
+});
 
-Route::resource('/comment','CommentController');
-Route::post('/comment/{id}', 'CommentController@delete')->name('comment.delete');
-Route::get('/comment', 'CommentController@update')->name('comment.update2');
+Route::group(['prefix'=>'post', 'middleware' => 'auth'],function () {
+	Route::post('/','PostController@store')->name('post.store');
+	Route::get('/{id}', 'PostController@edit')->name('post.edit');
+	Route::post('/{id}', 'PostController@delete')->name('post.delete');
+	Route::get('/', 'PostController@update')->name('post.update2');
+});
 
-Route::resource('/post','PostController');
-Route::post('/post/{id}', 'PostController@delete')->name('post.delete');
-Route::get('/post', 'PostController@update')->name('post.update2');
-
-Route::resource('/biography','UserBiographyController');
-Route::post('/biography/{id}', 'UserBiographyController@delete')->name('bio.delete');
-Route::get('/biography', 'UserBiographyController@update')->name('bio.update');
-
-// Route::get('/profile/{email}', 'UserController@profile')->name('profile');
+Route::group(['prefix'=>'biography', 'middleware' => 'auth'],function () {
+	Route::post('/','UserBiographyController@store')->name('biography.store');
+	Route::get('/{id}', 'UserBiographyController@edit')->name('biography.edit');
+	Route::post('/{id}', 'UserBiographyController@delete')->name('biography.delete');
+	Route::get('/', 'UserBiographyController@update')->name('biography.update');
+});
 
 
