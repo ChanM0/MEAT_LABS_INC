@@ -33,7 +33,7 @@ class UserController extends Controller
         $bio = UserBiography::where('user_id', $user->id )->first();
         $posts = Post::with('comments.author')->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
 
-        if(!is_null($bio)){
+        if(!is_null($user)){
             return view('user.profile',compact('bio','user','posts'));
 
         }
