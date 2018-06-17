@@ -52,6 +52,65 @@
 
                         Profile:
 
+                        <li>
+
+                            @if (Auth::user()->admin === 1)
+
+                            <div class="btn-group">
+
+
+
+
+                                @if (Auth::user()->id !== $user->id)
+
+                                <button autofocus type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                    Delete/Make Admin
+
+                                </button>
+
+                                @else
+
+                                <button autofocus type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                    Delete
+
+                                </button>
+
+                                @endif
+
+                                <div class="dropdown-menu">
+
+                                    <form method="post" action="{{ route( 'user.delete', [Auth::user()->id] ) }}">
+
+                                        @csrf
+
+                                        <input class="dropdown-item" type="submit" value="Delete">
+
+                                    </form>
+
+                                    @if (Auth::user()->id !== $user->id)
+
+                                    <form method="Post" action="{{ route( 'user.admin', [Auth::user()->id] ) }}">
+
+                                        @csrf
+
+                                        <input class="dropdown-item" type="submit" value="Make Admin">
+
+                                    </form>
+                                    
+                                    @endif
+
+                                    
+
+                                </div>
+
+                            </div>
+
+                            @endif 
+
+                        </li>
+
                         <li>User Id:
 
                             {{ $user->id }}
@@ -67,8 +126,6 @@
                         </li>
 
                     </h3>
-
-                    {{-- User is able to Post --}}
 
                     <ol>
 
@@ -154,31 +211,31 @@
 
                         <li>
 
-                            @include('forms.postForm')
+                         {{-- prints posts form--}}
+                         @include('forms.postForm')
 
-                        </li>
+                     </li>
 
-                        @endif
+                     @endif
 
-                        <li class="liMargin">
+                     <li class="liMargin">
 
-                            {{-- prints posts --}}
+                        {{-- prints posts --}}
+                        Posts:
 
-                            Posts:
+                        @include('layouts.postComment')           
 
-                            @include('layouts.postComment')           
+                    </li>   
 
-                        </li>   
-
-                    </ol>                    
-
-                </div>
+                </ol>                    
 
             </div>
 
         </div>
 
     </div>
+
+</div>
 
 </div>
 

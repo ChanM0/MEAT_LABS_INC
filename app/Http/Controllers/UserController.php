@@ -76,6 +76,20 @@ class UserController extends Controller
 
     }
 
+    public function delete($user_id)
+    {
+        $user = User::where('id',$user_id)->delete();
+        return redirect()->route('home');
+
+    }
+
+    public function admin($id)
+    {
+
+        return $id;
+
+    }
+
 
      /**
      * Show the form for editing the specified resource.

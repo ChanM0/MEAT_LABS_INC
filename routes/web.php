@@ -12,6 +12,8 @@ Route::get('/mainForum', 'PostController@mainForum')->name('forum');
 Route::get('/profile/{email}', 'UserController@profile')->name('profile');
 Route::get('/username/{id}', 'UserController@usernameEdit')->name('username.edit');
 Route::get('/username', 'UserController@usernameUpdate')->name('username.update');
+Route::post('/user/delete/{id}', 'UserController@delete')->name('user.delete');
+Route::post('/user/{id}', 'UserController@admin')->name('user.admin');
 
 
 // Route::group(['prefix'=>'comment'],function () {
@@ -27,7 +29,7 @@ Route::group(['prefix'=>'post', 'middleware' => 'auth'],function () {
 	Route::post('/','PostController@store')->name('post.store');
 	Route::get('/{id}', 'PostController@edit')->name('post.edit');
 	Route::post('/{id}', 'PostController@delete')->name('post.delete');
-	Route::get('/', 'PostController@update')->name('post.update2');
+	Route::get('/', 'PostController@update')->name('post.update');
 });
 
 Route::group(['prefix'=>'biography', 'middleware' => 'auth'],function () {

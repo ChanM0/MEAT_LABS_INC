@@ -32,7 +32,7 @@
 
                     <li>Post:
 
-                        <form method="get" action="{{ route('post.update2') }}">
+                        <form method="get" action="{{ route('post.update') }}">
 
                             @csrf
 
