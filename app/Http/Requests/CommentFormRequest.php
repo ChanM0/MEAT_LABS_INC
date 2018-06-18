@@ -24,21 +24,14 @@ class CommentFormRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-            'firstName' => 'required|string|',
-            'lastName' => 'required|string|',
-            'email' => 'required|email',
-            'password' => 'required|string|min:5',
-            'username' => 'required|string|'
+            'comment' => 'required|string|',
+            'post_id' => 'required',
         ];
     }
     public function message(){
         return [
-            'firstName.required' => 'Well it looks like you forgot a First Name',
-            'lastName.required' => 'Well it looks like you forgot a Last Name',
-            'email.required' => 'Well it looks like you forgot a Email',
-            'password.required' => 'Well it looks like you forgot a password',
-            'username.required' => 'Well it looks like you forgot a username',
+            'comment.required' => 'Comment input was left Null',
+            'post_id.required' => 'invalid post id',
         ];   
     }
 }

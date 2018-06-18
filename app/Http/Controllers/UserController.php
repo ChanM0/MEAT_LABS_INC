@@ -11,6 +11,8 @@ use App\Comment;
 use App\Mail\UserDeletionEmail;
 use Illuminate\Support\Facades\Mail;
 
+use App\Http\Requests\UsernameUpdateRequest;
+
 // You may access the authenticated user via the Auth facade:
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,8 +68,9 @@ class UserController extends Controller
 
     }
 
-    public function usernameUpdate(Request $request,$user_id)
+    public function usernameUpdate(UsernameUpdateRequest $request,$user_id)
     {
+        
         $user = User::where('id', $user_id)->first();
 
         if( !is_null( $user ) && Auth::user()->id === $user->id ){

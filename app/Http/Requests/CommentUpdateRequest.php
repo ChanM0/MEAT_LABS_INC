@@ -13,7 +13,7 @@ class CommentUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class CommentUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'comment' => 'required|string|',
+            'comment_id' => 'required',
         ];
+    }
+    public function message(){
+        return [
+            'comment.required' => 'Comment input was left Null',
+            'comment_id.required' => 'invalid comment id',
+        ];   
     }
 }

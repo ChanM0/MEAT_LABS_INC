@@ -8,7 +8,8 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-use App\Http\Requests\UserFormRequest;
+use App\Http\Requests\CommentFormRequest;
+use App\Http\Requests\CommentUpdateRequest;
 
 // You may access the authenticated user via the Auth facade:
 use Illuminate\Support\Facades\Auth;
@@ -31,9 +32,8 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store(Request $request,$user_id)
+     public function store(CommentFormRequest $request,$user_id)
      {
-
         //make sure you check if the comment is null?
         if(Auth::user()->id === intval($user_id)){
 
@@ -76,8 +76,9 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $comment_id)
+    public function update(CommentUpdateRequest $request, $comment_id)
     {
+        
         $comment = Comment::where('id', $comment_id)->first();
 
         if( (!is_null($comment))  && Auth::user()->id === intval($comment->user_id) ){

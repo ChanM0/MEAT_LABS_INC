@@ -7,8 +7,9 @@ use App\UserBiography;
 use App\User;
 
 // You may access the authenticated user via the Auth facade:
-// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use App\Http\Requests\UserBiopgraphyUpdateRequest;
 
 class UserBiographyController extends Controller
 {
@@ -71,8 +72,9 @@ class UserBiographyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $user_id)
+    public function update(UserBiopgraphyUpdateRequest $request, $user_id)
     {
+        
         $user = User::where('id',$user_id)->first();
 
         if( (!is_null( $user )) && (Auth::user()->id === $user->id) ){

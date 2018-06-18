@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
+
 class UserBiopgraphyUpdateRequest extends FormRequest
 {
     /**
@@ -13,7 +15,7 @@ class UserBiopgraphyUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +26,12 @@ class UserBiopgraphyUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'biography' => 'required|string|',
         ];
+    }
+    public function message(){
+        return [
+            'biography.required' => 'Biography input was left Null',
+        ];   
     }
 }

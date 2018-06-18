@@ -6,11 +6,12 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\User;
 
-
 // You may access the authenticated user via the Auth facade:
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Requests\PostFormRequest;
+use App\Http\Requests\PostUpdateRequest;
 
 class PostController extends Controller
 {
@@ -31,9 +32,8 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$user_id)
+    public function store(PostFormRequest $request,$user_id)
     {
-
         //create a requests file that makes sure post is not null
 
         if(Auth::user()->id === intval($user_id)){
@@ -81,7 +81,7 @@ class PostController extends Controller
      * @param  int  $post_id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$user_id)
+    public function update(PostUpdateRequest $request,$user_id)
     {
 
         $post = Post::where('id', $request->post_id)->first();
@@ -108,7 +108,6 @@ class PostController extends Controller
      public function delete($post_id)
      {
 
-
         $post = Post::where('id', $post_id)->first();
         
         if(!is_null($post)){
@@ -116,7 +115,7 @@ class PostController extends Controller
             $user = User::where('id',$post->user_id)->first();
 
             if( !is_null( $user ) && (Auth::user()->id === $user->id || Auth::user()->admin === 1)  ){
-                
+
                 Post::where('id', $post_id)->delete();
 
             }

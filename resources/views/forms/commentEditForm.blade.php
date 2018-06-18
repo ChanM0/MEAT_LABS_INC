@@ -4,6 +4,8 @@
 
 <div class="container">
 
+    @include('forms.errors')
+
     <div class="row justify-content-center">
 
         <div class="col-md-8">
@@ -48,9 +50,7 @@
 
                                     <input class="form-control" type="text" name="comment" id="comment"  value="{{ $comment->comment }}">
 
-                                    <input type="hidden"  name="user_id" value="{{ $comment->user_id }}">
-
-                                    <input type="hidden"  name="post_id" value="{{ $comment->id }}">
+                                    <input type="hidden"  name="comment_id" value="{{ $comment->id }}">
 
                                 </div>
 

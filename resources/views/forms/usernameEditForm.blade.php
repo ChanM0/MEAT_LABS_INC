@@ -4,6 +4,8 @@
 
 <div class="container">
 
+    @include('forms.errors')
+    
     <div class="row justify-content-center">
 
         <div class="col-md-8">

@@ -13,7 +13,7 @@ class PostUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class PostUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'post' => 'required|string|',
+            'post_id' => 'required',
         ];
     }
+    public function message(){
+        return [
+            'post.required' => 'Post input was left Null',
+            'post_id.required' => 'invalid post id',
+        ];   
+    }
 }
+

@@ -13,9 +13,9 @@ class UsernameUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
-
+    
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +24,15 @@ class UsernameUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'username' => 'required|string|',
+            'user_id' => 'required',
         ];
     }
+    public function message(){
+        return [
+            'username.required' => 'Username input was left Null',
+            'user_id.required' => 'invalid user id',
+        ];   
+    }
 }
+
