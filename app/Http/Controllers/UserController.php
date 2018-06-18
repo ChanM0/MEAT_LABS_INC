@@ -127,4 +127,11 @@ class UserController extends Controller
         return back()->withInput();
 
     }
+
+    public function showAll(){
+
+        $profiles = User::all();
+        // return $profiles;
+        return view('showAll',compact('profiles'));
+    }
 }

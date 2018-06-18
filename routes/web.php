@@ -9,13 +9,12 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Route::get('/mainForum', 'PostController@mainForum')->name('forum');
-
-
 
 Route::group(['prefix'=>'user', 'middleware' => 'auth'],function () {
 
 	Route::get('profile/{email}', 'UserController@profile')->name('profile');
+
+	Route::get('allProfiles', 'UserController@showAll')->name('profile.showAll');
 
 	Route::get('username/{id}', 'UserController@usernameEdit')->name('username.edit');
 
