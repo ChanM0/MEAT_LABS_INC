@@ -86,7 +86,7 @@
 
                                 <div class="dropdown-menu">
 
-                                    <form method="post" action="{{ route( 'user.delete', [$user->id] ) }}">
+                                    <form method="GET" action="{{ route( 'user.delete', [$user->id] ) }}">
 
                                         @csrf
 

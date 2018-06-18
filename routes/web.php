@@ -13,7 +13,7 @@ Route::group(['prefix'=>'user', 'middleware' => 'auth'],function () {
 	Route::get('profile/{email}', 'UserController@profile')->name('profile');
 	Route::get('username/{id}', 'UserController@usernameEdit')->name('username.edit');
 	Route::get('username', 'UserController@usernameUpdate')->name('username.update');
-	Route::post('delete/{id}', 'UserController@delete')->name('user.delete');
+	Route::get('delete/{id}', 'UserController@delete')->name('user.delete');
 	Route::post('admin/{id}', 'UserController@makeAdmin')->name('user.makeAdmin');
 	Route::post('{id}', 'UserController@removeAdmin')->name('user.removeAdmin');
 });
