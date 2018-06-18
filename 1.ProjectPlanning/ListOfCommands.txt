@@ -27,4 +27,16 @@ create mail
 	php artisan make:mail UserCreated
 
 
+create Request
+	
+	php artisan make:request PostUpdateRequest
+	php artisan make:request UserBiopgraphyUpdateRequest
+	php artisan make:request UsernameUpdateRequest
+	php artisan make:request PostFormRequest
+	php artisan make:request CommentFormRequest
+	php artisan make:request CommentUpdateRequest
+
+
+
+
 

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Comment;
 use App\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
+use App\Http\Requests\UserFormRequest;
 
 // You may access the authenticated user via the Auth facade:
 use Illuminate\Support\Facades\Auth;

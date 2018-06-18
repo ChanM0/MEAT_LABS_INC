@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserFormRequest extends FormRequest
+class CommentFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -39,7 +39,6 @@ class UserFormRequest extends FormRequest
             'email.required' => 'Well it looks like you forgot a Email',
             'password.required' => 'Well it looks like you forgot a password',
             'username.required' => 'Well it looks like you forgot a username',
-
         ];   
     }
 }
