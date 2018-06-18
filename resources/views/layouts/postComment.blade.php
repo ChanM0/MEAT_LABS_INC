@@ -16,7 +16,7 @@
 
             <div class="dropdown-menu">
 
-                <form method="POST" action="{{ route( 'post.delete', [$post->id] ) }}">
+                <form method="GET" action="{{ route( 'post.delete', [$post->id] ) }}">
 
                     @csrf
 
@@ -88,7 +88,7 @@
 
                             <div class="dropdown-menu">
 
-                                <form method="POST" action="{{ route( 'comment.delete', [$comment->id] ) }}">
+                                <form method="GET" action="{{ route( 'comment.delete', [$comment->id] ) }}">
 
                                     @csrf
 
@@ -150,7 +150,7 @@
 
     <li>
 
-        <form method="POST" action="{{route('comment.store')}}">
+        <form method="GET" action="{{route('comment.store',[Auth::user()->id] )}}">
 
             @csrf
 
@@ -163,8 +163,6 @@
                 <input type="input" class="col-md-4 form-control" id="comment" placeholder="Enter comment" name="comment" autofocus>
 
             </div>
-
-            <input type="hidden"  name="user_id" value="{{Auth::user()->id}}" >
 
             <input type="hidden"  name="post_id" value="{{ $post->id }}" >
 

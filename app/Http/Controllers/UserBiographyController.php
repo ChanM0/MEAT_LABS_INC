@@ -19,13 +19,22 @@ class UserBiographyController extends Controller
     }
 
 
-    public function delete($id)
+    public function delete($user_id)
     {
-        $bioUpdate = UserBiography::where('user_id', $id)
-        ->update(['biography' => '']);
-        $user = User::where('id',$id)->first();
-        return redirect()->route( 'profile', [$user->email] );
-        echo "Connection works delete";
+        $user = User::where('id',$user_id)->first();
+
+        if( (!is_null( $user )) && (Auth::user()->id === $user->id) ){
+
+            $bioUpdate = UserBiography::where('user_id', $user_id)
+
+            ->update(['biography' => '']);
+
+            return redirect()->route( 'profile', [$user->email] );
+
+        }
+
+        return redirect()->route('home');
+
     }
      /**
      * Show the form for editing the specified resource.
@@ -35,27 +44,24 @@ class UserBiographyController extends Controller
      */
      public function edit($user_id)
      {
+
         $user = User::where('id',$user_id)->first();
 
         if(!is_null($user)){
-            UserBiography::create([
-                'user_id' => $user_id,
-                'biography' => ''
-            ]);
-        }
-        else{
-            return redirect()->route('home');
-        }
 
-        $userBio = UserBiography::where('user_id', $user_id)->first();
-        //checks if the Authenticated user is able to see the edit post
-        if( Auth::user()->id === $userBio->user_id ){
-            return view('forms.editBioForm',compact('userBio','user_id'));
+            $userBio = UserBiography::where('user_id', $user_id)->first();
+
+            //checks if the Authenticated user is able to see the edit post
+            if(  Auth::user()->id === $userBio->user_id ){
+
+                return view('forms.editBioForm',compact('userBio','user_id'));
+
+            }
+            
         }
-        else{
-            return redirect()->route('home');
-        }
-        echo "Connection works edit";
+        
+        return redirect()->route('home');
+
     }
 
     /**
@@ -65,11 +71,21 @@ class UserBiographyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $user_id)
     {
-        $bioUpdate = UserBiography::where('user_id', $request->user_id)
-        ->update(['biography' => $request->biography]);
-        $user = User::where('id',$request->user_id)->first();
-        return redirect()->route( 'profile', [$user->email] );
+        $user = User::where('id',$user_id)->first();
+
+        if( (!is_null( $user )) && (Auth::user()->id === $user->id) ){
+
+            $bioUpdate = UserBiography::where('user_id', $user_id)
+
+            ->update(['biography' => $request->biography]);
+
+            return redirect()->route( 'profile', [$user->email] );
+
+        }
+
+        return redirect()->route('home');
+
     }
 }

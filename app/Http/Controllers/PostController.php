@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Post;
+use App\User;
 
 
 // You may access the authenticated user via the Auth facade:
@@ -30,77 +31,99 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$user_id)
     {
-        //create a requests file that makes sure post is not null
-        $post = Post::create([
-            'user_id' => $request->user_id,
-            'post' => $request->post
-        ]);
-        // return $post;
-        return back()->withInput();
-        // return redirect()->route( 'profile', [$request->email] );
-        echo "Connection works store";
-    }
 
-    public function mainForum(){
-        $posts = Post::with('comments.author')->with('user')
-        ->orderBy('created_at', 'desc')->get();
-        // return $posts;
-        return view('user.mainForum',compact('posts'));
+        //create a requests file that makes sure post is not null
+
+        if(Auth::user()->id === intval($user_id)){
+
+            $post = Post::create([
+
+                'user_id' => $user_id,
+
+                'post' => $request->post
+
+            ]);
+
+            return back()->withInput();
+
+        }
+
+        return back()->withInput();
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $post_id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($post_id)
     {
-        $post = Post::where('id', $id)->first();
+        $post = Post::where('id', $post_id)->first();
         
         //checks if the Authenticated user is able to see the edit post
-        if( Auth::user()->id === $post->user_id ){
+        if( (!is_null($post)) && Auth::user()->id === $post->user_id ){
+
             return view('forms.postEditForm',compact('post'));
+
         }
-        else{
-            return redirect()->route('home');
-        }
+
+        return redirect()->route('home');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $post_id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request,$user_id)
     {
+
+        $post = Post::where('id', $request->post_id)->first();
+
         //checks if the Authenticated user is able to see the edit post
-        if( Auth::user()->id === intval($request->user_id) ){
+        if( (!is_null($post)) && Auth::user()->id === intval($user_id) ){
+
             $post = Post::where('id', $request->post_id)
-                     ->update(['post' => $request->post]);
-            return redirect()->route( 'home' );
+
+            ->update(['post' => $request->post]);
+
         }
-        else{
-            return redirect()->route('home');
-        }
-        echo "Connection works update";
+
+        return redirect()->route('home');
+
     }
 
      /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $post_id
      * @return \Illuminate\Http\Response
      */
-     public function delete($id)
+     public function delete($post_id)
      {
-        Post::where('id', $id)->delete();
+
+
+        $post = Post::where('id', $post_id)->first();
+        
+        if(!is_null($post)){
+
+            $user = User::where('id',$post->user_id)->first();
+
+            if( !is_null( $user ) && (Auth::user()->id === $user->id || Auth::user()->admin === 1)  ){
+                
+                Post::where('id', $post_id)->delete();
+
+            }
+
+        }
+
         return back()->withInput();
-        echo "Connection works delete";
     }
 
 }

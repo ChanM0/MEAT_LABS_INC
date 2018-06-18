@@ -18,7 +18,7 @@
 
                 <div class="card-body">
 
-                    <form method="get" action="{{ route('biography.update') }}">
+                    <form method="get" action="{{ route('biography.update', [$user_id] ) }}">
 
                         @csrf
 
@@ -35,8 +35,6 @@
                                 {{ $userBio->biography }}
 
                             </textarea>
-
-                            <input type="hidden"  name="user_id" value="{{ $user_id }}">
 
                         </div>
 

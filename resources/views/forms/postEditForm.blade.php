@@ -32,7 +32,7 @@
 
                     <li>Post:
 
-                        <form method="get" action="{{ route('post.update') }}">
+                        <form method="get" action="{{ route('post.update',[Auth::user()->id]) }}">
 
                             @csrf
 
@@ -41,8 +41,6 @@
                                 <div class="col-md-6">
 
                                     <input class="form-control" type="text" name="post" id="post"  value="{{ $post->post }}">
-
-                                    <input type="hidden"  name="user_id" value="{{ $post->user_id }}">
 
                                     <input type="hidden"  name="post_id" value="{{ $post->id }}">
 

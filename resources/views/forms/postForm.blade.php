@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('post.store') }}">
+s<form method="GET" action="{{ route('post.store',[Auth::user()->id]) }}">
 
 	<div class="form-group">
 
@@ -7,10 +7,6 @@
 		<label for="post">{{ __('Create Post') }}</label>
 
 		<input type="input" class="col-md-4 form-control" id="post" placeholder="Enter post" name="post" autofocus>
-
-		<input type="hidden"  name="user_id" value="{{Auth::user()->id}}">
-
-		<input type="hidden"  name="email" value="{{Auth::user()->email}}">
 
 	</div>
 

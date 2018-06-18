@@ -12,6 +12,8 @@ use App\Http\Requests\UserFormRequest;
 use App\Mail\UserRegistrationEmail;
 use Illuminate\Support\Facades\Mail;
 
+use App\UserBiography;
+
 class RegisterController extends Controller
 {
     /*
@@ -78,8 +80,14 @@ class RegisterController extends Controller
             'username' => $data['username']
         ]);
 
-        // auth()->login($user);
-        // 
+        $bio = UserBiography::create([
+
+            'user_id' => $user->id,
+
+            'biography' => ''
+
+        ]); 
+
         Mail::to($user->email)->send(new UserRegistrationEmail($user));
         return $user;
 

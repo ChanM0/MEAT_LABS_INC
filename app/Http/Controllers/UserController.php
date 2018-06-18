@@ -59,18 +59,20 @@ class UserController extends Controller
         if( !is_null( $user ) && Auth::user()->id === $user->id ){
 
             return view('forms.usernameEditForm',compact('user', 'id' ));
+
         }
 
         return redirect()->route('home');
 
-
     }
 
-    public function usernameUpdate(Request $request)
+    public function usernameUpdate(Request $request,$user_id)
     {
-        if( Auth::user()->id === intval($request->user_id) ){
+        $user = User::where('id', $user_id)->first();
 
-            $user = User::where('id', $request->user_id)
+        if( !is_null( $user ) && Auth::user()->id === $user->id ){
+
+            $user = User::where('id', $user_id)
 
             ->update(['username' => $request->username]);
 
@@ -78,11 +80,7 @@ class UserController extends Controller
 
         }
 
-        else{
-
-            return redirect()->route('home');
-
-        }
+        return redirect()->route('home');
 
     }
 

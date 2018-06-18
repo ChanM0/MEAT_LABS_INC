@@ -52,7 +52,7 @@
 
                         Profile:
 
-                        @if (Auth::user()->admin === 1)
+                        @if (Auth::user()->admin === 1 || Auth::user()->id === $user->id)
 
                         <li>
 
@@ -84,6 +84,7 @@
 
                                 @endif
 
+
                                 <div class="dropdown-menu">
 
                                     <form method="GET" action="{{ route( 'user.delete', [$user->id] ) }}">
@@ -94,175 +95,178 @@
 
                                     </form>
 
-                                    {{-- 
-                                    if the login user isnt the current profile page user 
-                                    then show 
-                                    make Admin 
-                                    remove as Admin
-                                    --}}
+                                            {{-- 
+                                            if the login user isnt the current profile page user 
+                                            then show 
+                                            make Admin 
+                                            remove as Admin
+                                            --}}
+                                            @if (Auth::user()->id !== $user->id)
 
-                                    @if (Auth::user()->id !== $user->id)
-                                    
-                                        @if ($user->admin === 0)
+                                            @if ($user->admin === 0)
 
-                                        <form method="Post" action="{{ route( 'user.makeAdmin', [$user->id] ) }}">
+                                            <form method="Post" action="{{ route( 'user.makeAdmin', [$user->id] ) }}">
 
-                                            @csrf
+                                                @csrf
 
-                                            <input class="dropdown-item" type="submit" value="Make Admin">
+                                                <input class="dropdown-item" type="submit" value="Make Admin">
 
-                                        </form>
+                                            </form>
 
-                                        @else
+                                            @else
 
-                                        <form method="Post" action="{{ route( 'user.removeAdmin', [$user->id] ) }}">
+                                            <form method="Post" action="{{ route( 'user.removeAdmin', [$user->id] ) }}">
 
-                                            @csrf
+                                                @csrf
 
-                                            <input class="dropdown-item" type="submit" value="Remove Admin">
+                                                <input class="dropdown-item" type="submit" value="Remove Admin">
 
-                                        </form>
+                                            </form>
 
-                                        @endif
+                                            @endif
+
+                                            @endif
+
+                                        </div>
+
+                                    </div>
+
+                                </li>
+
+                                @endif                         
+
+                                <li>User Id:
+
+                                    {{ $user->id }}
+
+                                </li>
+
+                                <li>User Status:
+
+                                    @if (  $user->admin === 1)
+                                    Admin
+                                    @else
+                                    User
+                                    @endif              
+
+                                </li>
+
+                                <li>Name:
+
+                                    {{ $user->First_Name }}
+
+                                    {{ $user->Last_Name }}
+
+                                </li>
+
+                            </h3>
+
+                            <ol>
+
+                                <li>
+
+                                    User Name: 
+
+                                    {{  $user->username  }}
+
+                                    @if (Auth::user()->id === $user->id)
+
+                                    <div class="btn-group">
+
+                                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                            Edit
+
+                                        </button>
+
+                                        <div class="dropdown-menu">
+
+                                            <form method="GET" action="{{ route( 'username.edit', [Auth::user()->id] ) }}">
+
+                                                @csrf
+
+                                                <input class="dropdown-item" type="submit" value="Edit">
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                    @endif 
+
+                                </li>
+
+                                <li> Biography:
+
+                                    @if (!is_null($bio))
+
+                                    {{ $bio->biography }}
 
                                     @endif
 
-                                </div>
+                                    {{-- Bio Edit --}}
 
-                            </div>
+                                    @if (Auth::user()->id === $user->id)
 
-                        </li>
+                                    <div class="btn-group">
 
-                        @endif                         
+                                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        <li>User Id:
+                                            Delete/Edit
 
-                            {{ $user->id }}
+                                        </button>
 
-                        </li>
+                                        <div class="dropdown-menu">
 
-                        <li>User Status:
+                                            <form method="POST" action="{{ route( 'biography.delete', [Auth::user()->id] ) }}">
 
-                            @if (  $user->admin === 1)
-                            Admin
-                            @else
-                            User
-                            @endif              
+                                                @csrf
 
-                        </li>
+                                                <input class="dropdown-item" type="submit" value="Delete">
 
-                        <li>Name:
+                                            </form>
 
-                            {{ $user->First_Name }}
+                                            <div class="dropdown-divider"></div>
 
-                            {{ $user->Last_Name }}
+                                            <form method="GET" action="{{ route( 'biography.edit', [Auth::user()->id] ) }}">
 
-                        </li>
+                                                @csrf
 
-                    </h3>
+                                                <input class="dropdown-item" type="submit" value="Edit">
 
-                    <ol>
+                                            </form>
 
-                        <li>
+                                        </div>
 
-                            User Name: 
+                                    </div>
 
-                            {{  $user->username  }}
+                                    @endif 
 
-                            @if (Auth::user()->id === $user->id)
+                                </li>
 
-                            <div class="btn-group">
+                                @if (Auth::user()->id === $user->id)
+                                <li>
 
-                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{-- prints posts form--}}
+                                    @include('forms.postForm')
 
-                                    Edit
+                                </li>
+                                @endif
 
-                                </button>
+                                <li>
+                                    {{-- prints posts --}}
+                                    Posts:
 
-                                <div class="dropdown-menu">
+                                    @include('layouts.postComment')           
 
-                                    <form method="GET" action="{{ route( 'username.edit', [Auth::user()->id] ) }}">
+                                </li>   
 
-                                        @csrf
+                            </ol>                    
 
-                                        <input class="dropdown-item" type="submit" value="Edit">
+                        </div>
 
-                                    </form>
-
-                                </div>
-
-                            </div>
-
-                            @endif 
-
-                        </li>
-
-                        <li> Biography:
-
-                            @if (!is_null($bio))
-
-                            {{ $bio->biography }}
-
-                            @endif
-
-                            {{-- Bio Edit --}}
-
-                            @if (Auth::user()->id === $user->id)
-
-                            <div class="btn-group">
-
-                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                                    Delete/Edit
-
-                                </button>
-
-                                <div class="dropdown-menu">
-
-                                    <form method="POST" action="{{ route( 'biography.delete', [Auth::user()->id] ) }}">
-
-                                        @csrf
-
-                                        <input class="dropdown-item" type="submit" value="Delete">
-
-                                    </form>
-
-                                    <div class="dropdown-divider"></div>
-
-                                    <form method="GET" action="{{ route( 'biography.edit', [Auth::user()->id] ) }}">
-
-                                        @csrf
-
-                                        <input class="dropdown-item" type="submit" value="Edit">
-
-                                    </form>
-
-                                </div>
-
-                            </div>
-
-                            @endif 
-
-                        </li>
-
-                        @if (Auth::user()->id === $user->id)
-                        <li>
-
-                            {{-- prints posts form--}}
-                            @include('forms.postForm')
-
-                        </li>
-                        @endif
-
-                        <li>
-                            {{-- prints posts --}}
-                            Posts:
-
-                            @include('layouts.postComment')           
-
-                        </li>   
-
-                    </ol>                    
+                    </div>
 
                 </div>
 
@@ -270,8 +274,4 @@
 
         </div>
 
-    </div>
-
-</div>
-
-@endsection
+        @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Comment;
+use App\User;
 
 // You may access the authenticated user via the Auth facade:
 use Illuminate\Support\Facades\Auth;
@@ -26,37 +27,42 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store(Request $request)
+     public function store(Request $request,$user_id)
      {
+
         //make sure you check if the comment is null?
-         $comment = Comment::create([
-            'user_id' => $request->user_id,
-            'post_id' => $request->post_id,
-            'comment' => $request->comment 
-        ]);
+        if(Auth::user()->id === intval($user_id)){
 
-         return back()->withInput();
+            $comment = Comment::create([
+                'user_id' => $user_id,
+                'post_id' => $request->post_id,
+                'comment' => $request->comment 
+            ]);
 
-         echo "Connection works store";
-     }
+        }
+
+        return back()->withInput();
+
+    }
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($comment_id)
     {
-        $comment = Comment::where('id', $id)->first();
+        $comment = Comment::where('id', $comment_id)->first();
 
         //checks if the Authenticated user is able to see the edit comment
-        if( Auth::user()->id === $comment->user_id ){
+        if( (!is_null($comment)) && Auth::user()->id === $comment->user_id ){
+
             return view('forms.commentEditForm',compact('comment'));
+
         }
-        else{
-            return redirect()->route('home');
-        }
-        echo "Connection works edit";
+
+        return redirect()->route('home');
+
     }
 
     /**
@@ -68,15 +74,18 @@ class CommentController extends Controller
      */
     public function update(Request $request, $comment_id)
     {
-        if( Auth::user()->id === intval($request->user_id) ){
+        $comment = Comment::where('id', $comment_id)->first();
+
+        if( (!is_null($comment))  && Auth::user()->id === intval($comment->user_id) ){
+
             $comment = Comment::where('id', $comment_id)
+
             ->update(['comment' => $request->comment]);
-            return redirect()->route( 'home' );
+
         }
-        else{
-            return redirect()->route('home');
-        }
-        echo "Connection works update";
+
+        return redirect()->route('home');
+        
     }
 
      /**
@@ -85,10 +94,22 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function delete($id)
+     public function delete($comment_id)
      {
-        Comment::where('id', $id)->delete();
+        $comment = Comment::where('id', $comment_id)->first();
+
+        if(!is_null($comment)){
+
+            $user = User::where('id',$comment->user_id)->first();
+
+            if( !is_null( $user ) && (Auth::user()->id === $user->id || Auth::user()->admin === 1)  ){
+
+                Comment::where('id', $comment_id)->delete();
+
+            }
+
+        }
         return back()->withInput();
-        echo "Connection works delete";
+
     }
 }

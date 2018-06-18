@@ -18,7 +18,7 @@
 
                 <div class="card-body">
 
-                    <form method="GET" action="{{ route('username.update') }}">
+                    <form method="GET" action="{{ route('username.update' , [$user->id]) }}">
 
                         @csrf
 
