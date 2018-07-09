@@ -10,20 +10,26 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Contracts\PostContract;
+
 use App\Http\Requests\PostFormRequest;
 use App\Http\Requests\PostUpdateRequest;
 
 class PostController extends Controller
 {
+    protected $postRetriever = null;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PostContract $postRetriever) //dependency inject
     {
         $this->middleware('auth');
+
+        $this->postRetriever = $postRetriever;
+
     }
 
     /**
@@ -83,17 +89,12 @@ class PostController extends Controller
      */
     public function update(PostUpdateRequest $request,$user_id)
     {
+        $postData = [
+            'post_id' => $request->post_id,
+            'post' => $request->post
+        ];
 
-        $post = Post::where('id', $request->post_id)->first();
-
-        //checks if the Authenticated user is able to see the edit post
-        if( (!is_null($post)) && Auth::user()->id === intval($user_id) ){
-
-            $post = Post::where('id', $request->post_id)
-
-            ->update(['post' => $request->post]);
-
-        }
+        $this->postRetriever->updatePost($postData, $user_id);
 
         return redirect()->route('home');
 

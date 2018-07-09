@@ -147,6 +147,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        // meat lab 
+        App\Providers\PostServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
