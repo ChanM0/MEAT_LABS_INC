@@ -14,16 +14,22 @@ use App\Http\Requests\CommentUpdateRequest;
 // You may access the authenticated user via the Auth facade:
 use Illuminate\Support\Facades\Auth;
 
+use App\Contracts\CommentContract;
+
 class CommentController extends Controller
 {
+    protected $commentRetriever = null;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CommentContract $commentRetriever)
     {
         $this->middleware('auth');
+
+        $this->commentRetriever = $commentRetriever;
+
     }
 
      /**
@@ -34,16 +40,14 @@ class CommentController extends Controller
      */
      public function store(CommentFormRequest $request,$user_id)
      {
-        //make sure you check if the comment is null?
-        if(Auth::user()->id === intval($user_id)){
 
-            $comment = Comment::create([
-                'user_id' => $user_id,
-                'post_id' => $request->post_id,
-                'comment' => $request->comment 
-            ]);
+        $commentData = [
+            'user_id' => $user_id,
+            'post_id' => $request->post_id,
+            'comment' => $request->comment 
+        ];
 
-        }
+        $this->commentRetriever->storeComment($commentData);
 
         return back()->withInput();
 
@@ -78,17 +82,16 @@ class CommentController extends Controller
      */
     public function update(CommentUpdateRequest $request, $comment_id)
     {
+
+        $commentData = [
+
+            'comment_id' => $comment_id,
+            'comment' => $request->comment
+
+        ];
+
+        $this->commentRetriever->updateComment($commentData, $comment_id);
         
-        $comment = Comment::where('id', $comment_id)->first();
-
-        if( (!is_null($comment))  && Auth::user()->id === intval($comment->user_id) ){
-
-            $comment = Comment::where('id', $comment_id)
-
-            ->update(['comment' => $request->comment]);
-
-        }
-
         return redirect()->route('home');
         
     }
@@ -101,20 +104,12 @@ class CommentController extends Controller
      */
      public function delete($comment_id)
      {
-        $comment = Comment::where('id', $comment_id)->first();
 
-        if(!is_null($comment)){
+         $this->commentRetriever->deleteComment($comment_id);
 
-            $user = User::where('id',$comment->user_id)->first();
+         return back()->withInput();
+     }
 
-            if( !is_null( $user ) && (Auth::user()->id === $user->id || Auth::user()->admin === 1)  ){
 
-                Comment::where('id', $comment_id)->delete();
+ }
 
-            }
-
-        }
-        return back()->withInput();
-
-    }
-}

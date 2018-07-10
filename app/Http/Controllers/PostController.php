@@ -41,20 +41,19 @@ class PostController extends Controller
     public function store(PostFormRequest $request,$user_id)
     {
         //create a requests file that makes sure post is not null
+        //
 
-        if(Auth::user()->id === intval($user_id)){
+        $postData = [
 
-            $post = Post::create([
+            'user_id' => $user_id,
 
-                'user_id' => $user_id,
+            'post' => $request->post
 
-                'post' => $request->post
+        ];
 
-            ]);
+        $this->postRetriever->storePost($postData, $user_id);
 
-            return back()->withInput();
-
-        }
+        
 
         return back()->withInput();
 
@@ -109,19 +108,7 @@ class PostController extends Controller
      public function delete($post_id)
      {
 
-        $post = Post::where('id', $post_id)->first();
-        
-        if(!is_null($post)){
-
-            $user = User::where('id',$post->user_id)->first();
-
-            if( !is_null( $user ) && (Auth::user()->id === $user->id || Auth::user()->admin === 1)  ){
-
-                Post::where('id', $post_id)->delete();
-
-            }
-
-        }
+        $this->postRetriever->deletePost($post_id);
 
         return back()->withInput();
     }

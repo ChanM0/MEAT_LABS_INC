@@ -149,6 +149,7 @@ return [
 
         // meat lab 
         App\Providers\PostServiceProvider::class,
+        App\Providers\CommentServiceProvider::class,
 
         /*
          * Package Service Providers...
